@@ -6,3 +6,5 @@
 
 # unignore dirs:
 !*/
+
+*.o
