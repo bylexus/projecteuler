@@ -1,10 +1,10 @@
 # ignore all:
 *
+#
+# unignore dirs:
+!/**/
 
 # unignore all with extensions:
 !*.*
-
-# unignore dirs:
-!*/
 
 *.o

@@ -85,8 +85,10 @@ ul_hashmap_node *ul_hashmap_get(ul_hashmap *map, unsigned long key)
 {
     int composed_key = key % HASHMAP_SIZE;
     ul_hashmap_node *head = map->buckets[composed_key];
-    while (head != NULL) {
-        if (head->key == key) {
+    while (head != NULL)
+    {
+        if (head->key == key)
+        {
             return head;
         }
         head = head->next;
@@ -106,4 +108,38 @@ void ul_hashmap_print(ul_hashmap *map)
             node = node->next;
         }
     }
+}
+
+list_node *list_node_create(void *data, size_t datasize)
+{
+    list_node *node = malloc(sizeof(list_node));
+    node->data = malloc(datasize);
+    node->data = data;
+    node->next = NULL;
+    node->prev = NULL;
+    return node;
+}
+
+list_node *list_node_prepend(list_node *list, void *data, size_t datasize)
+{
+    list_node *node = list_node_create(data, datasize);
+    if (list != NULL)
+    {
+        list_node *prev = list->prev;
+        node->next = list;
+        node->prev = prev;
+        list->prev = node;
+        if (prev != NULL) {
+            prev->next = node;
+        }
+    }
+    return node;
+}
+
+void list_node_free(list_node *list)
+{
+}
+
+void list_node_free_all(list_node *list)
+{
 }
