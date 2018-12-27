@@ -129,7 +129,8 @@ list_node *list_node_prepend(list_node *list, void *data, size_t datasize)
         node->next = list;
         node->prev = prev;
         list->prev = node;
-        if (prev != NULL) {
+        if (prev != NULL)
+        {
             prev->next = node;
         }
     }
@@ -153,11 +154,17 @@ void list_node_free_all(list_node *list)
 int divsum(int n)
 {
     int sum = 1;
-    for (int i = 2; i <= n / 2; i++)
+    int divOp;
+    for (int i = 2; i <= sqrt(n); i++)
     {
         if (n % i == 0)
         {
             sum += i;
+            divOp = n / i;
+            if (divOp > i)
+            {
+                sum += divOp;
+            }
         }
     }
     return sum;
@@ -168,15 +175,19 @@ int divsum(int n)
  * the given array, return its index.
  * Returns -1 if not found.
  */
-int binsearch(int search, int *arr, int start, int end) {
+int binsearch(int search, int *arr, int start, int end)
+{
     int mid = (start + end) / 2;
-    if (arr[mid] == search) {
+    if (arr[mid] == search)
+    {
         return mid;
     }
-    if (search < arr[mid] && start < mid) {
+    if (search < arr[mid] && start < mid)
+    {
         return binsearch(search, arr, start, mid - 1);
     }
-    if (search > arr[mid] && mid < end) {
+    if (search > arr[mid] && mid < end)
+    {
         return binsearch(search, arr, mid + 1, end);
     }
     return -1;

@@ -52,7 +52,6 @@ int main(void)
 
     // Step 1: Create abundant map:
     for (unsigned int i = 12; i < 28123; i++)
-    // for (unsigned int i = 12; i < 100; i++)
     {
         if (isAbundant(i))
         {
