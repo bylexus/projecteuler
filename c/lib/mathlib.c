@@ -143,3 +143,41 @@ void list_node_free(list_node *list)
 void list_node_free_all(list_node *list)
 {
 }
+
+/**
+ * sum of (single) divisors of n.
+ * For example:
+ * proper divisors of 220 are 1, 2, 4, 5, 10, 11, 20, 22, 44, 55 and 110;
+ * therefore divsum(220) = 284
+ */
+int divsum(int n)
+{
+    int sum = 1;
+    for (int i = 2; i <= n / 2; i++)
+    {
+        if (n % i == 0)
+        {
+            sum += i;
+        }
+    }
+    return sum;
+}
+
+/**
+ * Binary search: searches for a specific number within
+ * the given array, return its index.
+ * Returns -1 if not found.
+ */
+int binsearch(int search, int *arr, int start, int end) {
+    int mid = (start + end) / 2;
+    if (arr[mid] == search) {
+        return mid;
+    }
+    if (search < arr[mid] && start < mid) {
+        return binsearch(search, arr, start, mid - 1);
+    }
+    if (search > arr[mid] && mid < end) {
+        return binsearch(search, arr, mid + 1, end);
+    }
+    return -1;
+}

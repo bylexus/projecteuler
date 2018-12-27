@@ -20,22 +20,6 @@
  *
  */
 
-/**
- * sum of (single) divisors)
- */
-int divsum(int n)
-{
-    int sum = 1;
-    for (int i = 2; i <= n / 2; i++)
-    {
-        if (n % i == 0)
-        {
-            sum += i;
-        }
-    }
-    return sum;
-}
-
 int main(void)
 {
     int divsum1;
