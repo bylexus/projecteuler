@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <string.h>
 
 #define HASHMAP_SIZE 1000000
 
@@ -48,3 +49,15 @@ int divsum(int n);
  * Returns -1 if not found.
  */
 int binsearch(int search, int *arr, int start, int end);
+
+/**
+ * Sorts the given char array by using selection sort in-place.
+ */
+void selectionSort(char **names, int len);
+
+/**
+ * Sorts the given char array by using quicksort sort in-place.
+ */
+void quickSort(char **names, int left, int right);
+
+unsigned long factorial(int n);

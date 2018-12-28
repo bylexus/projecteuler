@@ -63,25 +63,6 @@ int readNames(char **names)
     return nrOfNames;
 }
 
-void selectionSort(char **names, int len)
-{
-    char *tmp;
-    for (int i = 0; i < len; i++)
-    {
-        int maxindex = i;
-        for (int uidx = i; uidx < len; uidx++)
-        {
-            if (strcmp(names[maxindex], names[uidx]) > 0)
-            {
-                maxindex = uidx;
-            }
-        }
-        tmp = names[i];
-        names[i] = names[maxindex];
-        names[maxindex] = tmp;
-    }
-}
-
 int main(void)
 {
     char *names[6000];

@@ -192,3 +192,92 @@ int binsearch(int search, int *arr, int start, int end)
     }
     return -1;
 }
+
+/**
+ * Sorts the given char array by using selection sort in-place.
+ */
+void selectionSort(char **names, int len)
+{
+    char *tmp;
+    for (int i = 0; i < len; i++)
+    {
+        int maxindex = i;
+        for (int uidx = i; uidx < len; uidx++)
+        {
+            if (strcmp(names[maxindex], names[uidx]) > 0)
+            {
+                maxindex = uidx;
+            }
+        }
+        tmp = names[i];
+        names[i] = names[maxindex];
+        names[maxindex] = tmp;
+    }
+}
+
+
+int quickSort_divide(char **names, int left, int right)
+{
+    int i = left;
+    int j = right - 1;
+    char *tmp;
+    int pivot = right;
+
+    do
+    {
+
+        // Suche von links ein Element, welches größer als das Pivotelement ist
+        while (strcmp(names[i], names[pivot]) < 0 && i < right - 1)
+        {
+            i++;
+        }
+
+        // Suche von rechts ein Element, welches gleich oder kleiner als das Pivotelement ist
+        while (strcmp(names[j], names[pivot]) >= 0 && j > left)
+        {
+            j--;
+        }
+
+        if (i < j)
+        {
+            tmp = names[i];
+            names[i] = names[j];
+            names[j] = tmp;
+        }
+
+    } while (i < j);
+
+    // Tausche Pivotelement (daten[rechts]) mit neuer endgültiger Position (daten[i])
+    if (strcmp(names[i], names[pivot]) >= 0)
+    {
+        tmp = names[i];
+        names[i] = names[pivot];
+        names[pivot] = tmp;
+    }
+    // gib die neue Position des Pivotelements zurück, beende Durchlauf
+    return i;
+}
+
+/**
+ * Sorts the given char array by using quicksort sort in-place.
+ */
+void quickSort(char **names, int left, int right)
+{
+    int pivot;
+    if (left < right)
+    {
+        pivot = quickSort_divide(names, left, right);
+        quickSort(names, left, pivot);
+        quickSort(names, pivot + 1, right);
+    }
+}
+
+unsigned long factorial(int n)
+{
+    unsigned long res = 1;
+    while (n > 0)
+    {
+        res = res * n--;
+    }
+    return res;
+}
