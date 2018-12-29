@@ -352,3 +352,11 @@ bignum_int *bignum_int_sum(bignum_int *b1, bignum_int *b2, int max_digits)
     }
     return sum;
 }
+
+void bignum_int_free(bignum_int *bn)
+{
+    if (bn != NULL)
+    {
+        free(bn);
+    }
+}

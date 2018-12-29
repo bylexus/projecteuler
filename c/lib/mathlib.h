@@ -80,6 +80,11 @@ typedef struct {
 bignum_int *bignum_int_create(int max_digits, int init);
 
 /**
+ * frees the memory allocated by the given bignum_int object
+ */
+void bignum_int_free(bignum_int* bn);
+
+/**
  * Returns a pointer to a string, representing the big number
  */
 char *bignum_int_str(bignum_int *bignum);

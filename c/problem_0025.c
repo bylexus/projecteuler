@@ -41,13 +41,14 @@ int main(void)
     int number_index = 2;
     results[0] = bignum_int_create(1000, 1);
     results[1] = bignum_int_create(1000, 1);
-    // results[2] = bignum_int_sum(results[0], results[1], 1000);
+    results[2] = NULL;
 
     while (results[(number_index - 1) % 3]->length < 1000)
     {
         bignum_int *tmp = bignum_int_sum(
             results[(number_index - 1) % 3],
             results[(number_index - 2) % 3], 1000);
+        bignum_int_free(results[number_index % 3]);
         results[number_index % 3] = tmp;
         number_index++;
     }
