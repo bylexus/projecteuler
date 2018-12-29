@@ -61,3 +61,37 @@ void selectionSort(char **names, int len);
 void quickSort(char **names, int left, int right);
 
 unsigned long factorial(int n);
+
+
+// ----------------- BIGNUM  -----------------------
+/**
+ * Defines a big integer number. This struct should always
+ * be used with the bignum_int*-functions
+ */
+typedef struct {
+    int max_digits;
+    char *digits;
+    int length;
+} bignum_int;
+
+/**
+ * Creates a bignum_int object and returns a pointer to it.
+ */
+bignum_int *bignum_int_create(int max_digits, int init);
+
+/**
+ * Returns a pointer to a string, representing the big number
+ */
+char *bignum_int_str(bignum_int *bignum);
+
+
+/**
+ * Adds a normal integer to the bignum,
+ * returning 1 on success, 0 on failure
+ */
+bool bignum_int_add_int(bignum_int *bignum, int nr);
+
+/**
+ * Sums up 2 bignum_int numbers, returning the pointer to the result number
+ */
+bignum_int *bignum_int_sum(bignum_int *b1, bignum_int *b2, int max_digits);

@@ -215,7 +215,6 @@ void selectionSort(char **names, int len)
     }
 }
 
-
 int quickSort_divide(char **names, int left, int right)
 {
     int i = left;
@@ -280,4 +279,76 @@ unsigned long factorial(int n)
         res = res * n--;
     }
     return res;
+}
+
+// ----------------- BIGNUM  -----------------------
+
+bignum_int *bignum_int_create(int max_digits, int init)
+{
+    bignum_int *b = malloc(sizeof(bignum_int));
+    b->length = 1;
+    b->max_digits = max_digits;
+    b->digits = malloc(max_digits * sizeof(char));
+    b->digits[0] = 0;
+    bignum_int_add_int(b, init);
+    return b;
+}
+
+char *bignum_int_str(bignum_int *bignum)
+{
+    char *str = malloc((bignum->length + 1) * sizeof(char));
+    for (int i = bignum->length - 1; i >= 0; i--)
+    {
+        str[bignum->length - i - 1] = bignum->digits[i] + 48;
+    }
+    str[bignum->length] = '\0';
+    return str;
+}
+
+bool bignum_int_add_int(bignum_int *bignum, int nr)
+{
+    for (int i = 0; i < bignum->length; i++)
+    {
+        nr = bignum->digits[i] + nr;
+        bignum->digits[i] = nr % 10;
+        nr = nr / 10;
+    }
+    while (nr > 0)
+    {
+        if (bignum->max_digits > bignum->length + 1)
+        {
+            bignum->length++;
+            bignum->digits[bignum->length - 1] = nr % 10;
+            nr = nr / 10;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bignum_int *bignum_int_sum(bignum_int *b1, bignum_int *b2, int max_digits)
+{
+    int tmp = 0;
+    int len = b1->length > b2->length ? b1->length : b2->length;
+    bignum_int *sum = bignum_int_create(max_digits, 0);
+    for (int i = 0; i < len; i++)
+    {
+        int n1 = i < b1->length ? b1->digits[i] : 0;
+        int n2 = i < b2->length ? b2->digits[i] : 0;
+        tmp = n1 + n2 + tmp;
+        sum->digits[i] = tmp % 10;
+        tmp = tmp / 10;
+    }
+    sum->length = len;
+    while (tmp > 0 && sum->length <= sum->max_digits)
+    {
+
+        sum->length++;
+        sum->digits[sum->length - 1] = tmp % 10;
+        tmp = tmp / 10;
+    }
+    return sum;
 }
