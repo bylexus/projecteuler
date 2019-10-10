@@ -1,0 +1,23 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cpp CMAKE",
+            "type": "shell",
+            "command": "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Debug",
+            "options": {
+                "cwd": "${workspaceFolder}/cpp"
+            }
+        },
+        {
+            "label": "cpp make",
+            "type": "shell",
+            "command": "make all",
+            "options": {
+                "cwd": "${workspaceFolder}/cpp/build"
+            }
+        }
+    ]
+}
