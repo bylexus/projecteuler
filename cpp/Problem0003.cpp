@@ -4,6 +4,7 @@
 #include <iostream>
 #include <deque>
 #include "BaseProblem.cpp"
+#include "lib/math.h"
 
 /**
  * @see https://projecteuler.net:
@@ -20,38 +21,16 @@ class Problem0003 : public BaseProblem
 protected:
     std::deque<long> factors;
     long testNumber{600851475143L};
-    long biggest{0};
 
     virtual void init() override
     {
-        biggest = 0;
         factors.clear();
-    }
-
-    void primeFactorize(long nr, std::deque<long> &list, long &biggest)
-    {
-        long act = 2;
-        while (nr > 1)
-        {
-            if (nr % act == 0)
-            {
-                list.push_back(act);
-                nr = nr / act;
-                if (act > biggest)
-                    biggest = act;
-            }
-            else
-            {
-                act++;
-            }
-        }
     }
 
     virtual void run(long &solution) override
     {
-
-        primeFactorize(testNumber, factors, biggest);
-        solution = biggest;
+        euler::primeFactorize(testNumber, factors);
+        solution = factors.back();
     }
 
     virtual void postProcess() override
