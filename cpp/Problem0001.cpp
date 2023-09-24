@@ -2,7 +2,7 @@
 #define EULER_PROBLEM_0001
 
 #include <iostream>
-#include "BaseProblem.cpp"
+#include "BaseProblem.h"
 /**
  * @see https://projecteuler.net:
  *
@@ -16,26 +16,30 @@
  */
 class Problem0001 : public BaseProblem
 {
-protected:
-    int sum{0};
-    virtual void init() override
-    {
-        sum = 0;
-    }
-    virtual void run(long &solution) override
-    {
-        for (int i = 0; i < 1000; i++)
-        {
-            if (i % 3 == 0 || i % 5 == 0)
-            {
-                sum += i;
-            }
-        }
-        solution = sum;
-    }
+    protected:
 
-public:
-    Problem0001() : BaseProblem("Problem 1") {}
+        int sum{0};
+
+        virtual string getTitle() override {
+            return "Problem 1";
+        }
+
+        virtual void init() override
+        {
+            sum = 0;
+        }
+
+        virtual void run(long &solution) override
+        {
+            for (int i = 0; i < 1000; i++)
+            {
+                if (i % 3 == 0 || i % 5 == 0)
+                {
+                    sum += i;
+                }
+            }
+            solution = sum;
+        }
 };
 
 #endif

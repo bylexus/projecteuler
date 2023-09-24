@@ -4,13 +4,15 @@ project(projecteuler VERSION 0.1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# include(CTest)
-# enable_testing()
+include_directories(/opt/local/include)
+link_directories(/opt/local/lib)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
-add_library(math STATIC lib/math.cpp)
-target_include_directories(math PRIVATE .)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+add_subdirectory(lib)
 
 add_executable(projecteuler main.cpp)
 target_link_libraries(projecteuler math)

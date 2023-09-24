@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/src/lib/math.cpp
+deque
+-
+cmath
+-
+math.h
+/src/lib/math.h
+
+/src/lib/math.h
+deque
+-
+

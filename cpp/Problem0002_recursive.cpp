@@ -2,7 +2,7 @@
 #define EULER_PROBLEM_0002_RECURSIVE
 
 #include <iostream>
-#include "BaseProblem.cpp"
+#include "BaseProblem.h"
 /**
  * @see https://projecteuler.net:
  *
@@ -24,46 +24,48 @@
  */
 class Problem0002_recursive : public BaseProblem
 {
-protected:
-    long act{0};
-    long sum{0};
-    long counter{1};
-    virtual void init() override
-    {
-        act = 0;
-        sum = 0;
-        counter = 1;
-    }
+    protected:
+        long act{0};
+        long sum{0};
+        long counter{1};
 
-    long fibo(const long &nr)
-    {
-        if (nr == 0)
-        {
-            return 0;
+        virtual string getTitle() override {
+            return "Problem 2 - recursive variant";
         }
-        if (nr == 1)
-        {
-            return 1;
-        }
-        return fibo(nr - 1) + fibo(nr - 2);
-    }
 
-    virtual void run(long &solution) override
-    {
-        while (act < 4000000)
+        virtual void init() override
         {
-            if (act % 2 == 0)
+            act = 0;
+            sum = 0;
+            counter = 1;
+        }
+
+        long fibo(const long &nr)
+        {
+            if (nr == 0)
             {
-                sum += act;
+                return 0;
             }
-            act = fibo(counter);
-            counter++;
+            if (nr == 1)
+            {
+                return 1;
+            }
+            return fibo(nr - 1) + fibo(nr - 2);
         }
-        solution = sum;
-    }
 
-public:
-    Problem0002_recursive() : BaseProblem("Problem 2 - recursive variant") {}
+        virtual void run(long &solution) override
+        {
+            while (act < 4000000)
+            {
+                if (act % 2 == 0)
+                {
+                    sum += act;
+                }
+                act = fibo(counter);
+                counter++;
+            }
+            solution = sum;
+        }
 };
 
 #endif

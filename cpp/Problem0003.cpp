@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <deque>
-#include "BaseProblem.cpp"
+#include "BaseProblem.h"
 #include "lib/math.h"
 
 /**
@@ -18,32 +18,34 @@
  */
 class Problem0003 : public BaseProblem
 {
-protected:
-    std::deque<long> factors;
-    long testNumber{600851475143L};
+    protected:
+        std::deque<long> factors;
+        long testNumber{600851475143L};
 
-    virtual void init() override
-    {
-        factors.clear();
-    }
-
-    virtual void run(long &solution) override
-    {
-        euler::primeFactorize(testNumber, factors);
-        solution = factors.back();
-    }
-
-    virtual void postProcess() override
-    {
-        //Output prime factors:
-        std::cout << "Prime Factors:\n";
-        for (long act : factors)
-        {
-            std::cout << act << "\n";
+        virtual string getTitle() override {
+            return "Problem 3 - Largest Prime Factor";
         }
-    }
 
-public:
-    Problem0003() : BaseProblem("Problem 3 - Largest Prime Factor") {}
+
+        virtual void init() override
+        {
+            factors.clear();
+        }
+
+        virtual void run(long &solution) override
+        {
+            euler::primeFactorize(testNumber, factors);
+            solution = factors.back();
+        }
+
+        virtual void postProcess() override
+        {
+            //Output prime factors:
+            std::cout << "Prime Factors:\n";
+            for (long act : factors)
+            {
+                std::cout << act << "\n";
+            }
+        }
 };
 #endif

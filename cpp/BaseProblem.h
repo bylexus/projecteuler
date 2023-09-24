@@ -3,21 +3,18 @@
 #include <iostream>
 #include <chrono>
 #include <string>
+#include <cstring>
 
-using std::cout;
-using std::endl;
-using std::fixed;
+using namespace std;
 
 class BaseProblem
 {
 protected:
-    const char *title;
     std::chrono::duration<double> duration{0};
 
-    BaseProblem(const char *title) : title(title)
-    {
+    virtual string getTitle() {
+        return "Unknown Problem";
     }
-
     virtual void init() {}
     virtual void postProcess() {}
     virtual void run(long &solution) = 0;
@@ -33,7 +30,13 @@ protected:
 public:
     void start()
     {
+        string title = this->getTitle();
         cout << title << endl;
+        for (size_t i = 0; i < title.length(); i++) {
+            cout << "*";
+        }
+        cout << "\n\n";
+
         init();
         long solution{0};
         auto start = std::chrono::system_clock::now();

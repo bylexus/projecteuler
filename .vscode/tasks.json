@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "cpp CMAKE",
+            "label": "cpp CMAKE Debug Build",
             "type": "shell",
             "command": "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Debug",
             "options": {
@@ -12,7 +12,25 @@
             }
         },
         {
-            "label": "cpp make",
+            "label": "cpp CMAKE Release Build",
+            "type": "shell",
+            "command": "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release",
+            "options": {
+                "cwd": "${workspaceFolder}/cpp"
+            }
+        },
+        {
+            "label": "cpp make debug",
+            "dependsOn": ["cpp CMAKE Debug Build"],
+            "type": "shell",
+            "command": "make all",
+            "options": {
+                "cwd": "${workspaceFolder}/cpp/build"
+            }
+        },
+        {
+            "label": "cpp make release",
+            "dependsOn": ["cpp CMAKE Release Build"],
             "type": "shell",
             "command": "make all",
             "options": {

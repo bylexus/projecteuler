@@ -1,0 +1,10 @@
+/src/CMakeFiles/rebuild_cache.dir
+/src/CMakeFiles/edit_cache.dir
+/src/CMakeFiles/projecteuler.dir
+/src/CMakeFiles/package_source.dir
+/src/CMakeFiles/package.dir
+/src/lib/CMakeFiles/rebuild_cache.dir
+/src/lib/CMakeFiles/edit_cache.dir
+/src/lib/CMakeFiles/math.dir
+/src/lib/CMakeFiles/package_source.dir
+/src/lib/CMakeFiles/package.dir

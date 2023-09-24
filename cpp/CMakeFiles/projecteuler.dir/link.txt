@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Wextra -O3  -rdynamic CMakeFiles/projecteuler.dir/main.cpp.o  -o projecteuler  -L/opt/local/lib -Wl,-rpath,/opt/local/lib lib/libmath.a 

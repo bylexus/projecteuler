@@ -1,12 +1,14 @@
-# ignore all:
+# Ignore all
 *
-#
-# unignore dirs:
-!/**/
 
-# unignore all with extensions:
+# Unignore all with extensions
 !*.*
 
-*.o
+# Unignore all dirs
+!*/
 
+# Unignore Makefiles
+!Makefile
+
+*.o
 /cpp/build/

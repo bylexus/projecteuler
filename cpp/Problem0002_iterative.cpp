@@ -2,7 +2,7 @@
 #define EULER_PROBLEM_0002
 
 #include <iostream>
-#include "BaseProblem.cpp"
+#include "BaseProblem.h"
 /**
  * @see https://projecteuler.net:
  *
@@ -19,38 +19,40 @@
  */
 class Problem0002 : public BaseProblem
 {
-protected:
-    long a{0};
-    long b{1};
-    long act{0};
-    long sum{0};
-    virtual void init() override
-    {
-        a = 0;
-        b = 1;
-        act = 0;
-        sum = 0;
-    }
+    protected:
+        long a{0};
+        long b{1};
+        long act{0};
+        long sum{0};
 
-    virtual void run(long &solution) override
-    {
-        // instead of using a recursive variant, I calculate it iteratively here, as we don't want to
-        // re-calculate the whole sequence again for each new term:
-        while (act < 4000000)
-        {
-            if (act % 2 == 0)
-            {
-                sum += act;
-            }
-            act = a + b;
-            a = b;
-            b = act;
+        virtual string getTitle() override {
+            return "Problem 2 - iterative variant";
         }
-        solution = sum;
-    }
 
-public:
-    Problem0002() : BaseProblem("Problem 2 - iterative variant") {}
+        virtual void init() override
+        {
+            a = 0;
+            b = 1;
+            act = 0;
+            sum = 0;
+        }
+
+        virtual void run(long &solution) override
+        {
+            // instead of using a recursive variant, I calculate it iteratively here, as we don't want to
+            // re-calculate the whole sequence again for each new term:
+            while (act < 4000000)
+            {
+                if (act % 2 == 0)
+                {
+                    sum += act;
+                }
+                act = a + b;
+                a = b;
+                b = act;
+            }
+            solution = sum;
+        }
 };
 
 #endif

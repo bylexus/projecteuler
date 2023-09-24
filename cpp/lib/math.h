@@ -4,7 +4,8 @@
 
 namespace euler
 {
-void primeFactorize(long nr, std::deque<long> &list);
+    void primeFactorize(long nr, std::deque<long> &list);
+    bool isPrime(long nr);
 }
 
 #endif
