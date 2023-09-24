@@ -25,7 +25,7 @@ evenList :: [Integer] -> [Integer]
 evenList = filter even
 
 main =
-  let eulerProblem = 1
+  let eulerProblem = 2
       input = []
       solution = sum (evenList (fiboTo 4_000_000))
    in EulerLib.printProblemSolution eulerProblem solution
