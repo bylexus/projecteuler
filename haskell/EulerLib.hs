@@ -45,3 +45,35 @@ isPrime nr
 --   and something that is Showable (the result).
 printProblemSolution :: (Show b) => Integer -> b -> IO ()
 printProblemSolution prob sol = putStrLn (printf "Problem %05d: " prob ++ show sol)
+
+-- | Return the last n elements of a list
+lastN :: Integer -> [a] -> [a]
+lastN 0 _ = []
+lastN _ [] = []
+lastN n lst = lastN (n - 1) (init lst)  ++ [last lst]
+
+-- | Return the first n elements of a list
+headN :: Integer -> [a] -> [a]
+headN 0 _ = []
+headN _ [] = []
+headN n (x:xs) = x : headN (n-1) xs
+
+-- | Takes an Integer and returns a list of its single digits.
+toDigits :: Integer -> [Integer]
+toDigits n
+  | n < 0 = toDigits $ n * (-1)
+  | n < 10 = [n]
+  | otherwise = toDigits (div n 10) ++ [mod n 10]
+
+-- | Takes a fn and two lists a and b, and returns the combination of all elements
+--   from list a with all elements from list b, by applying fn(a, b) for each combination.
+--   Example:
+--   cross (*) [1,2] [3,4] -> [1*3 = 3, 1*4 = 4, 2*3 = 6, 2*4 = 8]
+cross :: (Integer -> Integer -> Integer) -> [Integer] -> [Integer] -> [Integer]
+cross _ _ [] = []
+cross _ [] _ = []
+cross fn (a : as) b = map (fn a) b ++ cross fn as b
+
+listMax :: [Integer] -> Integer
+listMax [] = error "List cannot be empty"
+listMax (a : as) = foldl max a as
