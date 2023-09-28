@@ -67,6 +67,8 @@ toDigits n
 
 -- | Takes a fn and two lists a and b, and returns the combination of all elements
 --   from list a with all elements from list b, by applying fn(a, b) for each combination.
+--   Aka "cross product", or cartesian product
+-- 
 --   Example:
 --   cross (*) [1,2] [3,4] -> [1*3 = 3, 1*4 = 4, 2*3 = 6, 2*4 = 8]
 cross :: (Integer -> Integer -> Integer) -> [Integer] -> [Integer] -> [Integer]

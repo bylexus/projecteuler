@@ -1,6 +1,5 @@
 import EulerLib
 
-
 isPalindrom :: Integer -> Bool
 isPalindrom i = digits == reverse digits
   where
