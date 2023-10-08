@@ -89,3 +89,17 @@ listMax [] = error "List cannot be empty"
 listMax (a : as) = foldl max a as
 
 trim = dropWhile isSpace . dropWhileEnd isSpace
+
+-- | Converts a single char to its Int digit
+charToDigit :: Char -> Maybe Int
+charToDigit '0' = Just 0
+charToDigit '1' = Just 1
+charToDigit '2' = Just 2
+charToDigit '3' = Just 3
+charToDigit '4' = Just 4
+charToDigit '5' = Just 5
+charToDigit '6' = Just 6
+charToDigit '7' = Just 7
+charToDigit '8' = Just 8
+charToDigit '9' = Just 9
+charToDigit _ = Nothing

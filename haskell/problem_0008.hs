@@ -24,26 +24,11 @@
 <p>Find the thirteen adjacent digits in the $1000$-digit number that have the greatest product. What is the value of this product?</p>
 ---------------------------------------------------------------------}
 
-import Data.Maybe (catMaybes, isJust, mapMaybe)
-import Data.Monoid (Product (Product))
-import Data.String
+import Data.Maybe (mapMaybe)
 import EulerLib qualified as E
 
 readInput = do
   readFile "data_0008.txt"
-
-charToDigit :: Char -> Maybe Int
-charToDigit '0' = Just 0
-charToDigit '1' = Just 1
-charToDigit '2' = Just 2
-charToDigit '3' = Just 3
-charToDigit '4' = Just 4
-charToDigit '5' = Just 5
-charToDigit '6' = Just 6
-charToDigit '7' = Just 7
-charToDigit '8' = Just 8
-charToDigit '9' = Just 9
-charToDigit _ = Nothing
 
 movingWindowList :: Int -> String -> [String]
 movingWindowList groupSize xs =
@@ -53,19 +38,14 @@ movingWindowList groupSize xs =
 
 productOfDigits :: String -> Maybe Int
 productOfDigits [] = Nothing
-productOfDigits [digit] = charToDigit digit
+productOfDigits [digit] = E.charToDigit digit
 productOfDigits (digit : xs) = prodMaybe intDigit prodRest
   where
-    intDigit = charToDigit digit
+    intDigit = E.charToDigit digit
     prodRest = productOfDigits xs
     prodMaybe :: Maybe Int -> Maybe Int -> Maybe Int
     prodMaybe (Just a) (Just b) = Just (a * b)
     prodMaybe _ _ = Nothing
-
-onlyJust = filter isJust
-
-prodOfList :: [Maybe Int] -> Int
-prodOfList list = product $ catMaybes list
 
 main = do
   input <- readInput
