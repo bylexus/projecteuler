@@ -26,14 +26,13 @@ nextCollatz n =
 collatzLength :: Int -> CollatzMap -> (Int, CollatzMap)
 collatzLength 1 cMap = (1, cMap)
 collatzLength n cMap = case Map.lookup n cMap of
-  Nothing -> (cnt, m)
-    where
-      m = Map.insert n cnt nMap
   Just nr -> (nr, cMap)
+  Nothing -> (cnt, finalMap)
   where
     nextNr = nextCollatz n
-    (nextLen, nMap) = collatzLength nextNr cMap
+    (nextLen, newMap) = collatzLength nextNr cMap
     cnt = 1 + nextLen
+    finalMap = Map.insert n cnt newMap
 
 collatzLengthsForList :: [Int] -> CollatzMap -> ([(Int, Int)], CollatzMap)
 collatzLengthsForList [] m = ([], m)
