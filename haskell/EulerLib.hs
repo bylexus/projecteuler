@@ -2,7 +2,7 @@ module EulerLib where
 
 import Text.Printf (printf)
 import Data.Char (isSpace)
-import Data.List (dropWhileEnd)
+import Data.List (dropWhileEnd, nub)
 
 multipleOf :: (Integral a) => a -> a -> Bool
 multipleOf multiplier test =
@@ -103,3 +103,7 @@ charToDigit '7' = Just 7
 charToDigit '8' = Just 8
 charToDigit '9' = Just 9
 charToDigit _ = Nothing
+
+-- | returns only the unique items of a list.
+unique :: (Eq a) => [a] -> [a]
+unique = nub
