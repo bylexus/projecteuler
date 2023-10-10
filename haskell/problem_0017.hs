@@ -39,7 +39,7 @@ nrToWords wMap n
 
 main = do
   input <- readFile "data_0017.txt"
-  let eulerProblem = 16
+  let eulerProblem = 17
       l = lines input
       pairs = map (\l -> (read (l !! 0) :: Int, trim (l !! 1))) (map (E.splitAtChar ':') l)
       wordMap = Map.fromList pairs

@@ -2,6 +2,7 @@ module EulerLib where
 
 import Data.Char (isSpace)
 import Data.List (dropWhileEnd, nub)
+import Data.Map qualified as Map
 import Text.Printf (printf)
 
 multipleOf :: (Integral a) => a -> a -> Bool
@@ -116,3 +117,19 @@ splitAtChar chr str = leftPart : splitAtChar chr rightStr
     rightStr = if length rightPart > 0 
       then tail rightPart
       else rightPart
+
+
+type Map2d a = Map.Map (Int, Int) a
+
+listToCoordMap2 :: [[a]] -> Map2d a
+listToCoordMap2 [] = Map.empty
+listToCoordMap2 [[]] = Map.empty
+listToCoordMap2 lst = Map.fromList coordTuples
+  where
+    emptyMap = Map.empty
+    -- [[(x,v),(x,v),(x,v)]]
+    indexedValues = map (\line -> zip [0 .. length line - 1] line) lst
+    -- [(y,[(x,v),(x,v),(x,v)])]
+    indexedLines = zip [0 .. length indexedValues - 1] indexedValues
+    indexedTuples = map (\(y, l) -> map (\(x, v) -> ((y, x), v)) l) indexedLines
+    coordTuples = concat indexedTuples
