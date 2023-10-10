@@ -1,8 +1,8 @@
 module EulerLib where
 
-import Text.Printf (printf)
 import Data.Char (isSpace)
 import Data.List (dropWhileEnd, nub)
+import Text.Printf (printf)
 
 multipleOf :: (Integral a) => a -> a -> Bool
 multipleOf multiplier test =
@@ -30,7 +30,7 @@ reduce fn lst acc = case lst of
 
 -- | Checks if the given number testNr is divisible of any of the
 --   numbers from 'from' to 'to'.
-isDivisible :: Integral a => a -> a -> a -> Bool
+isDivisible :: (Integral a) => a -> a -> a -> Bool
 isDivisible from to testNr =
   if from <= to
     then
@@ -107,3 +107,12 @@ charToDigit _ = Nothing
 -- | returns only the unique items of a list.
 unique :: (Eq a) => [a] -> [a]
 unique = nub
+
+splitAtChar :: Char -> String -> [String]
+splitAtChar _ "" = []
+splitAtChar chr str = leftPart : splitAtChar chr rightStr
+  where
+    (leftPart, rightPart) = break (== chr) str
+    rightStr = if length rightPart > 0 
+      then tail rightPart
+      else rightPart
