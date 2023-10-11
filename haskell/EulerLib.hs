@@ -133,3 +133,8 @@ listToCoordMap2 lst = Map.fromList coordTuples
     indexedLines = zip [0 .. length indexedValues - 1] indexedValues
     indexedTuples = map (\(y, l) -> map (\(x, v) -> ((y, x), v)) l) indexedLines
     coordTuples = concat indexedTuples
+
+-- | Factorial of n: n! --> n * (n-1) * .. * 1
+factorial :: (Eq t, Num t) => t -> t
+factorial 1 = 1
+factorial n = n * factorial (n - 1)
