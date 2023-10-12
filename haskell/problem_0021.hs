@@ -9,8 +9,8 @@ import EulerLib qualified as E
 
 main = do
   let eulerProblem = 21
-      numbers = [1..9999]
+      numbers = [1 .. 9999]
       divsumPairs = map (\x -> (x, sum (E.divisors x))) numbers
-      amicableNumbers = [a | (a,b) <- divsumPairs, (c,d) <- divsumPairs, a /= b && a == d && b == c]
+      amicableNumbers = [a | (a, b) <- divsumPairs, (c, d) <- divsumPairs, a /= b && a == d && b == c]
       solution = sum amicableNumbers
   E.printProblemSolution eulerProblem solution
