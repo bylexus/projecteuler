@@ -1,7 +1,7 @@
 module EulerLib where
 
 import Data.Char (isSpace)
-import Data.List (dropWhileEnd, nub)
+import Data.List (dropWhileEnd, nub, sort)
 import Data.Map qualified as Map
 import Text.Printf (printf)
 
@@ -138,3 +138,10 @@ listToCoordMap2 lst = Map.fromList coordTuples
 factorial :: (Eq t, Num t) => t -> t
 factorial 1 = 1
 factorial n = n * factorial (n - 1)
+
+-- | Returns a list of all divisors of a number (without the number itself)
+-- | Example: divisors 220 = [1,2,4,5,10,11,20,22,44,55,110]
+divisors :: Int -> [Int]
+divisors n = (filter (/= n ) . sort . unique . concatMap pairDivs) allSmallDivs
+  where allSmallDivs = [x | x <- [1 .. ceiling (sqrt (fromIntegral n))], n `mod` x == 0]
+        pairDivs x = [x, n `div` x]
