@@ -12,3 +12,4 @@
 
 *.o
 /cpp/build/
+.DS_Store

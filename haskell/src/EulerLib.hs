@@ -5,6 +5,17 @@ import Data.List (dropWhileEnd, nub, sort)
 import Data.Map qualified as Map
 import Text.Printf (printf)
 
+class EulerProblem a where
+  problemNr :: a -> Int
+  title :: a -> String
+  solution :: a -> String
+
+data ProblemSolution = ProblemSolution
+  { psNr :: Int,
+    psTitle :: String,
+    psSolution :: String
+  }
+
 multipleOf :: (Integral a) => a -> a -> Bool
 multipleOf multiplier test =
   mod test multiplier == 0
@@ -44,16 +55,26 @@ isPrime :: Integer -> Bool
 isPrime nr
   | nr <= 1 = False
   | nr == 2 = True
-  | otherwise = not (isDivisible 2 (ceiling (sqrt (fromIntegral nr))) nr)
+  | otherwise = not (isDivisible 2 (ceiling (sqrt (fromIntegral nr :: Double))) nr)
 
 -- | An infinite list of primes. Make sure to limit it if you take elements of it.
 -- | TODO: Maybe we can implement that more efficient by using the sieve of Eratosthenes?
+primeList :: [Integer]
 primeList = filter isPrime [2 ..]
 
--- | Prints a solution including its title. Give the problem number
---   and something that is Showable (the result).
-printProblemSolution :: (Show b) => Integer -> b -> IO ()
-printProblemSolution prob sol = putStrLn (printf "Problem %05d: " prob ++ show sol)
+-- | Prints a solution including its title.
+printProblemSolution :: Maybe ProblemSolution -> IO ()
+printProblemSolution Nothing = putStrLn "Problem not found"
+printProblemSolution (Just (ProblemSolution nr title solution)) = do
+  let t = printf "#%05d: " nr ++ title
+      sol = solution
+      tLen = length t
+      line = replicate tLen '='
+  putStrLn t
+  putStrLn line
+  putStrLn ""
+  putStrLn ("Solution: " ++ sol)
+  putStrLn "\n\n"
 
 -- | Return the last n elements of a list
 lastN :: Integer -> [a] -> [a]
@@ -89,6 +110,7 @@ listMax :: [Integer] -> Integer
 listMax [] = error "List cannot be empty"
 listMax (a : as) = foldl max a as
 
+trim :: String -> String
 trim = dropWhile isSpace . dropWhileEnd isSpace
 
 -- | Converts a single char to its Int digit
@@ -114,10 +136,10 @@ splitAtChar _ "" = []
 splitAtChar chr str = leftPart : splitAtChar chr rightStr
   where
     (leftPart, rightPart) = break (== chr) str
-    rightStr = if length rightPart > 0 
-      then tail rightPart
-      else rightPart
-
+    rightStr =
+      if length rightPart > 0
+        then tail rightPart
+        else rightPart
 
 type Map2d a = Map.Map (Int, Int) a
 
@@ -126,7 +148,6 @@ listToCoordMap2 [] = Map.empty
 listToCoordMap2 [[]] = Map.empty
 listToCoordMap2 lst = Map.fromList coordTuples
   where
-    emptyMap = Map.empty
     -- [[(x,v),(x,v),(x,v)]]
     indexedValues = map (\line -> zip [0 .. length line - 1] line) lst
     -- [(y,[(x,v),(x,v),(x,v)])]
@@ -142,6 +163,7 @@ factorial n = n * factorial (n - 1)
 -- | Returns a list of all divisors of a number (without the number itself)
 -- | Example: divisors 220 = [1,2,4,5,10,11,20,22,44,55,110]
 divisors :: Int -> [Int]
-divisors n = (filter (/= n ) . sort . unique . concatMap pairDivs) allSmallDivs
-  where allSmallDivs = [x | x <- [1 .. ceiling (sqrt (fromIntegral n))], n `mod` x == 0]
-        pairDivs x = [x, n `div` x]
+divisors n = (filter (/= n) . sort . unique . concatMap pairDivs) allSmallDivs
+  where
+    allSmallDivs = [x | x <- [1 .. ceiling (sqrt (fromIntegral n :: Double))], n `mod` x == 0]
+    pairDivs x = [x, n `div` x]
