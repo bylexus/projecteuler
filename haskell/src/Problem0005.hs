@@ -1,8 +1,19 @@
+module Problem0005 (solution) where
+
 {--------------------------------------------------------------------
 <p>$2520$ is the smallest number that can be divided by each of the numbers from $1$ to $10$ without any remainder.</p>
 <p>What is the smallest positive number that is <dfn class="tooltip">evenly divisible<span class="tooltiptext">divisible with no remainder</span></dfn> by all of the numbers from $1$ to $20$?</p>
 ---------------------------------------------------------------------}
-import EulerLib
+import EulerLib qualified as E
+
+solution =
+  E.ProblemSolution
+    { E.psNr = 5,
+      E.psTitle = "Smallest Multiple",
+      E.psSolve = \_ -> show $ findDivByAll 20 20,
+      E.psSolution = "",
+      E.psReadInput = pure ""
+    }
 
 -- | Checks if the number nr is evenly divisable by all numbers from 1 to n
 divisibleByAll :: Integer -> Integer -> Bool
@@ -18,8 +29,3 @@ findDivByAll dividend divisor =
   if divisibleByAll divisor dividend
     then dividend
     else findDivByAll (dividend + divisor) divisor
-
-main =
-  let eulerProblem = 5
-      solution = findDivByAll 20 20
-   in EulerLib.printProblemSolution eulerProblem solution

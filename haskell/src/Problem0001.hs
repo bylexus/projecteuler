@@ -1,4 +1,4 @@
-module Problem0001 where
+module Problem0001 (solution) where
 
 {--------------------------------------------------------------------
 <p>If we list all the natural numbers below $10$ that are multiples of $3$ or $5$, we get $3, 5, 6$ and $9$. The sum of these multiples is $23$.</p>
@@ -6,16 +6,16 @@ module Problem0001 where
 ---------------------------------------------------------------------}
 import EulerLib qualified as E
 
-data Problem = P deriving (Show)
+solution =
+  E.ProblemSolution
+    { E.psNr = 1,
+      E.psTitle = "Multiples of 3 or 5",
+      E.psSolve = \_ -> show (sum (map (\x -> E.valueIf multipleOf3Or5 x 0) input)),
+      E.psSolution = "",
+      E.psReadInput = pure ""
+    }
 
-instance E.EulerProblem Problem where
-  problemNr _ = 1
-  title _ = "Multiples of 3 or 5"
-  solution :: Problem -> String
-  solution _ = solution
-    where
-      input = [1 .. 999]
-      solution = show (sum (map (\x -> E.valueIf multipleOf3Or5 x 0) input))
+input = [1 .. 999]
 
 -- | Checks if the given value is a multiple of 5
 multipleOf5 :: Integer -> Bool

@@ -5,15 +5,12 @@ import Data.List (dropWhileEnd, nub, sort)
 import Data.Map qualified as Map
 import Text.Printf (printf)
 
-class EulerProblem a where
-  problemNr :: a -> Int
-  title :: a -> String
-  solution :: a -> String
-
 data ProblemSolution = ProblemSolution
   { psNr :: Int,
     psTitle :: String,
-    psSolution :: String
+    psSolve :: String -> String,
+    psSolution :: String,
+    psReadInput :: IO String
   }
 
 multipleOf :: (Integral a) => a -> a -> Bool
@@ -63,11 +60,12 @@ primeList :: [Integer]
 primeList = filter isPrime [2 ..]
 
 -- | Prints a solution including its title.
-printProblemSolution :: Maybe ProblemSolution -> IO ()
-printProblemSolution Nothing = putStrLn "Problem not found"
-printProblemSolution (Just (ProblemSolution nr title solution)) = do
-  let t = printf "#%05d: " nr ++ title
-      sol = solution
+printProblemSolution :: ProblemSolution -> IO ()
+printProblemSolution solution = do
+  let nr = psNr solution
+      title = psTitle solution
+      sol = psSolution solution
+      t = printf "#%05d: " nr ++ title
       tLen = length t
       line = replicate tLen '='
   putStrLn t

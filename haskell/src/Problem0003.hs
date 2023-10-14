@@ -1,4 +1,4 @@
-module Problem0003 where
+module Problem0003 (solution) where
 
 {--------------------------------------------------------------------
 <p>The prime factors of $13195$ are $5, 7, 13$ and $29$.</p>
@@ -6,16 +6,18 @@ module Problem0003 where
 ---------------------------------------------------------------------}
 import EulerLib qualified as E
 
+solution =
+  E.ProblemSolution
+    { E.psNr = 3,
+      E.psTitle = "Largest Prime Factor",
+      E.psSolve = \_ -> show $ largestPrimeFactor input 600_851_475_143,
+      E.psSolution = "",
+      E.psReadInput = pure ""
+    }
+
 data Problem = P deriving (Show)
 
-instance E.EulerProblem Problem where
-  problemNr _ = 3
-  title _ = "Largest Prime Factor"
-  solution :: Problem -> String
-  solution _ = solution
-    where
-      input = filter E.isPrime [2 ..] -- infinite list of primes
-      solution = show $ largestPrimeFactor input 600_851_475_143
+input = filter E.isPrime [2 ..] -- infinite list of primes
 
 largestPrimeFactor :: [Integer] -> Integer -> Integer
 largestPrimeFactor lst target

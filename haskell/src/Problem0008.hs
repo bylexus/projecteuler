@@ -1,3 +1,5 @@
+module Problem0008 (solution) where
+
 {--------------------------------------------------------------------
 <p>The four adjacent digits in the $1000$-digit number that have the greatest product are $9 \times 9 \times 8 \times 9 = 5832$.</p>
 <p class="monospace center">
@@ -27,8 +29,16 @@
 import Data.Maybe (mapMaybe)
 import EulerLib qualified as E
 
-readInput = do
-  readFile "data_0008.txt"
+solution =
+  E.ProblemSolution
+    { E.psNr = 8,
+      E.psTitle = "Largest Product in a Series",
+      E.psSolve = \input -> show $ maximum (mapMaybe productOfDigits (movingWindowList windowSize (E.trim input))),
+      E.psSolution = "",
+      E.psReadInput = do readFile "data_0008.txt"
+    }
+
+windowSize = 13
 
 movingWindowList :: Int -> String -> [String]
 movingWindowList groupSize xs =
@@ -46,10 +56,3 @@ productOfDigits (digit : xs) = prodMaybe intDigit prodRest
     prodMaybe :: Maybe Int -> Maybe Int -> Maybe Int
     prodMaybe (Just a) (Just b) = Just (a * b)
     prodMaybe _ _ = Nothing
-
-main = do
-  input <- readInput
-  let windowSize = 13
-  let solution = maximum (mapMaybe productOfDigits (movingWindowList windowSize (E.trim input)))
-  let eulerProblem = 8
-  E.printProblemSolution eulerProblem solution
