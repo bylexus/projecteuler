@@ -1,3 +1,5 @@
+module Problem0018 (solution) where
+
 {--------------------------------------------------------------------
 <p>By starting at the top of the triangle below and moving to adjacent numbers on the row below, the maximum total from top to bottom is 23.</p>
 <p class="monospace center"><span class="red"><b>3</b></span><br>
@@ -26,9 +28,19 @@
 ---------------------------------------------------------------------}
 
 import Data.Map.Strict qualified as Map
-import Data.Maybe (fromJust)
 import EulerLib qualified as E
 
+solution :: E.ProblemSolution
+solution =
+  E.ProblemSolution
+    { E.psNr = 18,
+      E.psTitle = "Maximum Path Sum I",
+      E.psSolve = show . calcSolution,
+      E.psSolution = "",
+      E.psReadInput = readFile "data_0018.txt"
+    }
+
+lineToValues :: String -> [Int]
 lineToValues = map (read :: String -> Int) . words
 
 type MemoMap = Map.Map (Int, Int) Int
@@ -51,11 +63,9 @@ maxSumMem mMap (y, x) valueMap = (actValue, retMem)
     (leftVal, mem1) = maxSumMem mMap (y + 1, x) valueMap
     (rightVal, mem2) = maxSumMem mem1 (y + 1, x + 1) valueMap
 
-main = do
-  input <- readFile "data_0018.txt"
-  let eulerProblem = 18
-      rawValues = (map lineToValues . filter (/= "") . lines) input
-      inputMap = E.listToCoordMap2 rawValues
-      -- solution = maxSum (0, 0) inputMap
-      (solution, _) = maxSumMem Map.empty (0, 0) inputMap
-  E.printProblemSolution eulerProblem solution
+calcSolution :: String -> Int
+calcSolution input = s
+  where
+    rawValues = (map lineToValues . filter (/= "") . lines) input
+    inputMap = E.listToCoordMap2 rawValues
+    (s, _) = maxSumMem Map.empty (0, 0) inputMap

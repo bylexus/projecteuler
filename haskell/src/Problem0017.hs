@@ -1,3 +1,5 @@
+module Problem0017 (solution) where
+
 {--------------------------------------------------------------------
 <p>If the numbers $1$ to $5$ are written out in words: one, two, three, four, five, then there are $3 + 3 + 5 + 4 + 4 = 19$ letters used in total.</p>
 <p>If all the numbers from $1$ to $1000$ (one thousand) inclusive were written out in words, how many letters would be used? </p>
@@ -8,6 +10,16 @@ import Data.Map qualified as Map
 import Data.Maybe (fromJust)
 import EulerLib (trim)
 import EulerLib qualified as E
+
+solution :: E.ProblemSolution
+solution =
+  E.ProblemSolution
+    { E.psNr = 17,
+      E.psTitle = "Number Letter Counts",
+      E.psSolve = show . calcSolution,
+      E.psSolution = "",
+      E.psReadInput = readFile "data_0017.txt"
+    }
 
 nrToWords :: Map.Map Int String -> Int -> String
 nrToWords wMap n
@@ -23,28 +35,28 @@ nrToWords wMap n
             if rest > 0
               then "and"
               else ""
-          lowerPart = if rest > 0 
-            then nrToWords wMap rest
-            else ""
-       in nrToWords wMap hundredVal ++ hundred++ and ++ lowerPart
-  | n < 10000 = 
+          lowerPart =
+            if rest > 0
+              then nrToWords wMap rest
+              else ""
+       in nrToWords wMap hundredVal ++ hundred ++ and ++ lowerPart
+  | n < 10000 =
       let thousandVal = (n `div` 1000)
           rest = n `mod` 1000
           thousand = fromJust (Map.lookup 1000 wMap)
-          lowerPart = if rest > 0 
-            then nrToWords wMap rest
-            else ""
+          lowerPart =
+            if rest > 0
+              then nrToWords wMap rest
+              else ""
        in nrToWords wMap thousandVal ++ thousand ++ lowerPart
   | otherwise = "Unknown"
 
-main = do
-  input <- readFile "data_0017.txt"
-  let eulerProblem = 17
-      l = lines input
-      pairs = map (\l -> (read (l !! 0) :: Int, trim (l !! 1))) (map (E.splitAtChar ':') l)
-      wordMap = Map.fromList pairs
-      mappedNrToWords = nrToWords wordMap
-      inputList = [1 .. 1000]
-      words = map mappedNrToWords inputList
-      solution = (sum . map length) words
-  E.printProblemSolution eulerProblem solution
+calcSolution :: String -> Int
+calcSolution input = (sum . map length) nrOfWords
+  where
+    l = lines input
+    pairs = map (\l -> (read (l !! 0) :: Int, trim (l !! 1))) (map (E.splitAtChar ':') l)
+    wordMap = Map.fromList pairs
+    mappedNrToWords = nrToWords wordMap
+    inputList = [1 .. 1000]
+    nrOfWords = map mappedNrToWords inputList

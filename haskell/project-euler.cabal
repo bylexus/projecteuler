@@ -33,6 +33,21 @@ library
       Problem0006
       Problem0007
       Problem0008
+      Problem0009
+      Problem0010
+      Problem0011
+      Problem0012
+      Problem0013
+      Problem0014
+      Problem0015
+      Problem0016
+      Problem0017
+      Problem0018
+      Problem0019
+      Problem0020
+      Problem0021
+      Problem0022
+      Problem0067
   other-modules:
       Paths_project_euler
   autogen-modules:
@@ -43,6 +58,7 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , time
   default-language: GHC2021
 
 executable projecteuler
@@ -58,6 +74,7 @@ executable projecteuler
       base >=4.7 && <5
     , containers
     , project-euler
+    , time
   default-language: GHC2021
 
 test-suite projecteuler-test
@@ -74,4 +91,5 @@ test-suite projecteuler-test
       base >=4.7 && <5
     , containers
     , project-euler
+    , time
   default-language: GHC2021

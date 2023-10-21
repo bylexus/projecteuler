@@ -1,3 +1,5 @@
+module Problem0014 (solution) where
+
 {--------------------------------------------------------------------
 <p>The following iterative sequence is defined for the set of positive integers:</p>
 <ul style="list-style-type:none;">
@@ -13,8 +15,17 @@
 import Data.Map.Strict qualified as Map
 import EulerLib qualified as E
 
-type CollatzMap = Map.Map Int Int
+solution :: E.ProblemSolution
+solution =
+  E.ProblemSolution
+    { E.psNr = 14,
+      E.psTitle = "Longest Collatz Sequence",
+      E.psSolve = \_ -> show solutionNr,
+      E.psSolution = "",
+      E.psReadInput = do readFile "data_0013.txt"
+    }
 
+type CollatzMap = Map.Map Int Int
 
 nextCollatz :: Int -> Int
 nextCollatz 1 = 1
@@ -50,8 +61,8 @@ findLongest ((nr, l) : xs) =
   where
     (nextNr, nextL) = findLongest xs
 
-main = do
-  let eulerProblem = 14
-      (collatzList, _) = collatzLengthsForList [1 .. 999_999] (Map.empty :: CollatzMap)
-      (solution, m) = findLongest collatzList
-  E.printProblemSolution eulerProblem solution
+collatzList :: [(Int, Int)]
+(collatzList, _) = collatzLengthsForList [1 .. 999_999] (Map.empty :: CollatzMap)
+
+solutionNr :: Int
+(solutionNr, _) = findLongest collatzList

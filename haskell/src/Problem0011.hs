@@ -1,3 +1,5 @@
+module Problem0011 (solution) where
+
 {--------------------------------------------------------------------
 <p>In the $20 \times 20$ grid below, four numbers along a diagonal line have been marked in red.</p>
 <p class="monospace center">
@@ -29,6 +31,16 @@ import Data.Map.Strict qualified as Map
 import Data.Maybe (catMaybes)
 import EulerLib qualified as E
 
+solution :: E.ProblemSolution
+solution =
+  E.ProblemSolution
+    { E.psNr = 11,
+      E.psTitle = "Largest Product in a Grid",
+      E.psSolve = show . calcSolution,
+      E.psSolution = "",
+      E.psReadInput = do readFile "data_0011.txt"
+    }
+
 {-
 Working in a 2d array is somewhat hard in Haskell. So I form a map of Coords (y,x) => Value,
 which is slower in access but much more convenient.
@@ -46,9 +58,8 @@ type NumberList = [NumberWithCoord]
 
 type NumberMap = Map.Map Coord Integer
 
-readInput = do readFile "data_0011.txt"
-
 -- | Converts the raw input string to a list of lists of values (aka 2d-array)
+inputToList :: String -> [[Integer]]
 inputToList str = map (\l -> map (read :: String -> Integer) (words l)) $ lines str
 
 -- | Given a list [a], we form a list of tuples with
@@ -61,13 +72,13 @@ withIndex lst = zip [0 .. toInteger (length lst) - 1] lst
 -- | Converts the input values into a [(Coord, Value)] tuple list. Each entry forms a
 -- | tuple of its array coordinate and the value after processing.
 linesToCoordValueTuples :: [[Integer]] -> NumberList
-linesToCoordValueTuples lines = concatMap (\(lnIdx, line) -> lineToCoordVal lnIdx (withIndex line)) indexedLines
+linesToCoordValueTuples l = concatMap (\(lnIdx, line) -> lineToCoordVal lnIdx (withIndex line)) indexedLines
   where
-    indexedLines = withIndex lines
+    indexedLines = withIndex l
     lineToCoordVal lineNr = map (\(colIdx, nr) -> ((lineNr, colIdx), nr))
 
 -- | Forms value groups of 4 neighbour numbers for all directions for the given start coordinate.
--- | There are 4 directions to process: 
+-- | There are 4 directions to process:
 -- | - horizontal (left->right)
 -- | - vertical (top->bottom)
 -- | - diagonal TL -> BR
@@ -76,7 +87,7 @@ linesToCoordValueTuples lines = concatMap (\(lnIdx, line) -> lineToCoordVal lnId
 formGroupForCoord :: Coord -> NumberMap -> [[Integer]]
 formGroupForCoord (y, x) nrMap =
   filter
-    (\x -> length x == 4)
+    (\n -> length n == 4)
     [ catMaybes
         [ Map.lookup (y, x) nrMap,
           Map.lookup (y, x + 1) nrMap,
@@ -112,14 +123,11 @@ productsForCoordinate coord nrMap =
   where
     groupsForCoord = formGroupForCoord coord nrMap
 
-main = do
-  let eulerProblem = 11
-  input <- readInput
-  let lines = inputToList input
-      linesWithCoords = linesToCoordValueTuples lines
-      numberMap = Map.fromList linesWithCoords :: NumberMap
-      allCoords = Map.keys numberMap
-      allProducts = concatMap (\coord -> productsForCoordinate coord numberMap) allCoords
-      solution = maximum allProducts
-
-  E.printProblemSolution eulerProblem solution
+calcSolution :: String -> Integer
+calcSolution input = maximum allProducts
+  where
+    inputLines = inputToList input
+    linesWithCoords = linesToCoordValueTuples inputLines
+    numberMap = Map.fromList linesWithCoords :: NumberMap
+    allCoords = Map.keys numberMap
+    allProducts = concatMap (\coord -> productsForCoordinate coord numberMap) allCoords

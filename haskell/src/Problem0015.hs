@@ -1,3 +1,5 @@
+module Problem0015 (solution) where
+
 {--------------------------------------------------------------------
 <p>Starting in the top left corner of a $2 \times 2$ grid, and only being able to move to the right and down, there are exactly $6$ routes to the bottom right corner.</p>
 <div class="center">
@@ -9,6 +11,16 @@ import Data.Map.Strict qualified as Map
 import EulerLib qualified as E
 
 type CoordCountMap = Map.Map (Int, Int) Int
+
+solution :: E.ProblemSolution
+solution =
+  E.ProblemSolution
+    { E.psNr = 15,
+      E.psTitle = "Lattice Paths",
+      E.psSolve = \_ -> show solNr,
+      E.psSolution = "",
+      E.psReadInput = pure ""
+    }
 
 -- | count the routes for a given coordinate, working with and returning a memoization
 -- | map of already visited routes.
@@ -31,7 +43,5 @@ countRoutes (x, y) (maxX, maxY) cMap
   where
     actCount = Map.lookup (x, y) cMap
 
-main = do
-  let eulerProblem = 15
-      (solution, _) = countRoutes (0, 0) (20, 20) Map.empty
-  E.printProblemSolution eulerProblem solution
+solNr :: Int
+(solNr, _) = countRoutes (0, 0) (20, 20) Map.empty
