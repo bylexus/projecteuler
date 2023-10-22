@@ -48,6 +48,7 @@ library
       Problem0021
       Problem0022
       Problem0023
+      Problem0024
       Problem0067
   other-modules:
       Paths_project_euler
@@ -58,6 +59,7 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
+    , combinatorial
     , containers
     , time
   default-language: GHC2021
@@ -73,6 +75,7 @@ executable projecteuler
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , combinatorial
     , containers
     , project-euler
     , time
@@ -90,6 +93,7 @@ test-suite projecteuler-test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , combinatorial
     , containers
     , project-euler
     , time
