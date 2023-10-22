@@ -47,6 +47,7 @@ library
       Problem0020
       Problem0021
       Problem0022
+      Problem0023
       Problem0067
   other-modules:
       Paths_project_euler
