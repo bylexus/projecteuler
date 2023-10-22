@@ -8,39 +8,49 @@ module Problem0023 (solution) where
 <p>Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.</p>
 ---------------------------------------------------------------------}
 
+import Data.IntSet qualified as Set
 import EulerLib qualified as E
-import Data.Map qualified as Map
-import Data.Maybe (isJust)
 
 solution :: E.ProblemSolution
 solution =
   E.ProblemSolution
     { E.psNr = 23,
       E.psTitle = "Non-Abundant Sums",
-      E.psSolve = show . calcSolution,
+      E.psSolve = \_ -> show calcSolution,
       E.psSolution = "",
       E.psReadInput = pure ""
     }
 
-isAbundantNr :: Map.Map Int Int -> Int -> Bool
-isAbundantNr nrMap nr = isJust (Map.lookup nr nrMap)
+calcSolution :: Int
+calcSolution = sum checkedNrs
 
-isSumOfAbundantNumbers :: Map.Map Int Int -> [Int] -> Int -> Bool
-isSumOfAbundantNumbers nrMap abundantNrs testNr = any (\x -> isAbundantNr nrMap (testNr - x)) abundantNrs
+maxNr :: Int
+maxNr = 28123
 
--- calcSolution :: String -> Int
-calcSolution _ = s
+abundantNumbers :: [Int]
+abundantNumbers = map fst (filter (\(x, sumDivs) -> sumDivs > x) (map (\x -> (x, sum (E.divisors x))) [12 .. maxNr]))
+
+-- | A set containing all the abundant numbers from 1 to maxNr
+-- | I use a set, as I have to look them up fast (contains)
+abundantSet :: Set.IntSet
+abundantSet = Set.fromList abundantNumbers
+
+-- | A list of numbers and a list of smaller abundant numbers as that number: I need
+-- | to check if the number can be built by the sum of the set of smaller abundant numbers
+nrsWithAbundantsToCheck :: [(Int, [Int])]
+nrsWithAbundantsToCheck = map (\x -> (x, filter (< x) abundantNumbers)) [1 .. maxNr]
+
+-- | That's a mouthful... The checkedNumbers list contains only numbers that cannot
+-- | be built by a sum of 2 smaller abundant numbers.
+checkedNrs :: [Int]
+checkedNrs = map fst onlyNunSummableNrs
   where
-    maxNr = 28123
-    -- maxNr = 100
-    -- abundantNumbers = map (\x -> (x, sum (E.divisors x))) [1 .. 28123]
-    abundantNumbers = map fst (filter (\(x, sumDivs) -> sumDivs > x) (map (\x -> (x, sum (E.divisors x))) [12 .. maxNr]))
-    abundantMap = Map.fromList (map (\x -> (x, x)) abundantNumbers)
-    nrsWithAbundantsToCheck = map (\x -> (x, filter (< x) abundantNumbers)) [1 .. maxNr]
-    checkedNrs = map (\(nr, lst) -> (nr, isSumOfAbundantNumbers abundantMap lst nr)) nrsWithAbundantsToCheck
-    filteredPairs = filter (\(_, isSum) -> not isSum) checkedNrs
-    filteredNrs = map fst filteredPairs
-    -- sumOf2AbundantNumbers =  [x + y | x <- abundantNumbers, y <- abundantNumbers, x <= y && x + y < maxNr]
-    -- nonSumsOf2Abundant = filter (\x -> () ) [1 .. maxNr]
-    -- s = sum nonSumsOf2Abundant
-    s = sum filteredNrs
+    nrsCanBeSummed = map (\(nr, lst) -> (nr, isSumOfAbundantNumbers lst nr)) nrsWithAbundantsToCheck
+    onlyNunSummableNrs = filter (\(_, isSum) -> not isSum) nrsCanBeSummed
+
+
+isAbundantNr :: Int -> Bool
+isAbundantNr nr = Set.member nr abundantSet
+
+isSumOfAbundantNumbers :: [Int] -> Int -> Bool
+isSumOfAbundantNumbers abundantNrs testNr = any (\x -> isAbundantNr (testNr - x)) abundantNrs
