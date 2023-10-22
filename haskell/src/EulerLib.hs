@@ -165,3 +165,23 @@ divisors n = (filter (/= n) . sort . unique . concatMap pairDivs) allSmallDivs
   where
     allSmallDivs = [x | x <- [1 .. ceiling (sqrt (fromIntegral n :: Double))], n `mod` x == 0]
     pairDivs x = [x, n `div` x]
+
+-- | Creates a Fibonacchi sequence until the predicate is true for the (actual) number,
+-- | then stops and returns the generated list.
+-- | The smalles version is [1,2]
+fiboTo :: (Integer -> Bool) -> [Integer]
+fiboTo predicate = reverse (_fiboToPredicate [2, 1] predicate)
+
+-- | internal Helper function to fiboTo:
+--   generates a list of fibonacchi elements until the predicate is true,
+--   by appending to the front. MUST be started with an empty list
+-- Returns all calculated fibonacchi numbers up to here, including the last number for
+-- which the predicate was true.
+_fiboToPredicate :: [Integer] -> (Integer -> Bool) -> [Integer]
+_fiboToPredicate lst predicate = case lst of
+  [] -> _fiboToPredicate [2, 1] predicate
+  [_] -> _fiboToPredicate [2, 1] predicate
+  (a : b : _) ->
+    if predicate (a + b)
+      then a + b : lst
+      else _fiboToPredicate (a + b : lst) predicate

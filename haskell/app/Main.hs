@@ -26,6 +26,7 @@ import Problem0021 qualified as P21
 import Problem0022 qualified as P22
 import Problem0023 qualified as P23
 import Problem0024 qualified as P24
+import Problem0025 qualified as P25
 import Problem0067 qualified as P67
 import System.Environment (getArgs)
 
@@ -54,6 +55,7 @@ getProblem 21 = Just P21.solution
 getProblem 22 = Just P22.solution
 getProblem 23 = Just P23.solution
 getProblem 24 = Just P24.solution
+getProblem 25 = Just P25.solution
 getProblem 67 = Just P67.solution
 getProblem _ = Nothing
 
